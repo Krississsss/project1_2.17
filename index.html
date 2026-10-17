@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2:17 AM — 凌晨 2:17</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== Title Screen ===== -->
+    <section id="title-screen" class="screen active">
+      <div class="title-content">
+        <div class="title-flicker">
+          <h1 class="game-title">2:17 AM</h1>
+        </div>
+        <p class="game-subtitle">凌晨 2:17</p>
+        <p class="title-tagline">一間空無一人的夜班保安室。<br>時鐘停了。電話響了。門外有人敲門。</p>
+        <button id="start-btn" class="btn btn-primary">開始值班</button>
+      </div>
+      <div class="scanlines"></div>
+      <div class="vignette"></div>
+    </section>
+
+    <!-- ===== Game Screen ===== -->
+    <section id="game-screen" class="screen">
+
+      <!-- Clue Bar -->
+      <div id="clue-bar">
+        <span class="clue-bar-title">已調查線索</span>
+        <div class="clue-item" data-clue="cctv">
+          <span class="clue-dot"></span>
+          <span class="clue-label">監視器</span>
+        </div>
+        <div class="clue-item" data-clue="phone">
+          <span class="clue-dot"></span>
+          <span class="clue-label">電話與字條</span>
+        </div>
+        <div class="clue-item" data-clue="clock">
+          <span class="clue-dot"></span>
+          <span class="clue-label">時鐘</span>
+        </div>
+      </div>
+
+      <!-- Room Scene -->
+      <div id="room-scene">
+        <div class="room-bg-wall"></div>
+        <div class="room-bg-floor"></div>
+        <div class="room-light-source"></div>
+
+        <!-- Wall Clock -->
+        <div class="game-object" id="obj-clock" data-obj="clock">
+          <div class="clock-body">
+            <div class="clock-face">
+              <div class="clock-marks"></div>
+              <div class="clock-hand hour-hand"></div>
+              <div class="clock-hand minute-hand"></div>
+              <div class="clock-center-dot"></div>
+            </div>
+          </div>
+          <div class="object-label">時鐘</div>
+          <div class="investigated-mark"><span>&#10003;</span></div>
+        </div>
+
+        <!-- Desk -->
+        <div class="desk">
+          <div class="desk-surface"></div>
+          <div class="desk-front"></div>
+        </div>
+
+        <!-- CCTV Monitor -->
+        <div class="game-object" id="obj-cctv" data-obj="cctv">
+          <div class="cctv-monitor">
+            <div class="cctv-screen" id="cctv-screen">
+              <div class="cctv-corridor" id="cctv-corridor">
+                <div class="cctv-corridor-walls"></div>
+                <div class="cctv-door" id="cctv-door"></div>
+                <div class="cctv-static"></div>
+              </div>
+              <div class="cctv-ending-scene hidden" id="cctv-ending-scene">
+                <div class="cctv-ending-room">
+                  <div class="cctv-ending-figure" id="cctv-figure">
+                    <div class="figure-body"></div>
+                    <div class="figure-head" id="figure-head">
+                      <div class="figure-face"></div>
+                    </div>
+                  </div>
+                  <div class="cctv-ending-door"></div>
+                </div>
+                <div class="cctv-static"></div>
+              </div>
+              <div class="cctv-overlay-text" id="cctv-overlay-text">CAM 01 — 走廊</div>
+            </div>
+            <div class="cctv-stand"></div>
+            <div class="cctv-base"></div>
+          </div>
+          <div class="object-label">監視器</div>
+          <div class="investigated-mark"><span>&#10003;</span></div>
+        </div>
+
+        <!-- Telephone and Note -->
+        <div class="game-object" id="obj-phone" data-obj="phone">
+          <div class="phone-group">
+            <div class="phone-base"></div>
+            <div class="phone-handset"></div>
+            <div class="phone-rind"></div>
+            <div class="note-paper">
+              <div class="note-lines"></div>
+            </div>
+          </div>
+          <div class="object-label">電話與字條</div>
+          <div class="investigated-mark"><span>&#10003;</span></div>
+        </div>
+
+        <!-- Atmosphere overlays -->
+        <div class="scanlines"></div>
+        <div class="flicker-overlay"></div>
+        <div class="vignette"></div>
+        <div class="room-tint"></div>
+      </div>
+
+      <!-- Text Panel -->
+      <div id="text-panel">
+        <div id="narrative-text"></div>
+        <div id="continue-prompt" class="hidden">繼續 ▸</div>
+      </div>
+
+      <!-- Final Choice Panel -->
+      <div id="choice-panel" class="hidden">
+        <p class="choice-prompt">你已經查看了所有東西。現在，你必須做出選擇。</p>
+        <div class="choices">
+          <button id="choice-open-door" class="btn btn-choice btn-danger">開門</button>
+          <button id="choice-stay-inside" class="btn btn-choice btn-safe">不開門</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== Ending Screen ===== -->
+    <section id="ending-screen" class="screen">
+      <div class="ending-content">
+        <div class="ending-flicker">
+          <h2 id="ending-title"></h2>
+        </div>
+        <p id="ending-subtitle" class="ending-subtitle"></p>
+        <button id="restart-btn" class="btn btn-primary">重新開始</button>
+      </div>
+      <div class="scanlines"></div>
+      <div class="vignette"></div>
+    </section>
+
+    <!-- Screen shake container for knock effect -->
+    <div id="shake-trigger"></div>
+
+  </div>
+</body>
+<script type="module" src="/main.js"></script>
+</html>
